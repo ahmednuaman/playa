@@ -1,0 +1,3 @@
+[submodule "AS3"]
+	path = AS3
+	url = git@github.com:ahmednuaman/AS3.git
