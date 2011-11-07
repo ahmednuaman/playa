@@ -11,10 +11,14 @@ package
 	public class Player extends Sprite
 	{
 		private var asset:MixedAssetPlayer						= new MixedAssetPlayer();
+		
+		private var controlsY:Number;
 		private var player:Object;
 		
 		public function Player()
 		{
+			controlsY	= asset.height - asset.controls.y;
+			
 			loaderInfo.addEventListener( Event.INIT, handleInit );
 		}
 		
@@ -180,6 +184,16 @@ package
 				
 				stage.displayState	= StageDisplayState.FULL_SCREEN;
 			}
+		}
+		
+		public function handleResize(e:Event):void
+		{
+			player.height	= stage.stageHeight;
+			player.width	= stage.stageWidth;
+			
+			asset.controls.y	= stage.stageHeight - controlsY;
+			
+			asset.controls.seekBar.width	= stage.stageWidth - asset.controls.seekBar.x - asset.controls.buttonPlayPause.x;
 		}
 		
 		private function get currentTime():Number

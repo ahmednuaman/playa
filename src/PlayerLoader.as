@@ -25,20 +25,27 @@ package
 			loader.x		= ( stage.stageWidth - loader.width ) / 2;
 			loader.y		= ( stage.stageHeight - loader.height ) / 2;
 			
-			//stage.align		= StageAlign.TOP_LEFT;
-			//stage.scaleMode	= StageScaleMode.NO_SCALE;
+			stage.align		= StageAlign.TOP_LEFT;
+			stage.scaleMode	= StageScaleMode.NO_SCALE;
 			
 			addChild( loader );
 			
-			DisplayObjectUtil.loadMovie( loaderInfo.parameters.swf + '?url=' + loaderInfo.parameters.url + '&autoplay=' + loaderInfo.parameters.autoplay, 
-											null, handleComplete );
+			DisplayObjectUtil.loadMovie( 
+				( loaderInfo.parameters.swf || 'Player.swf' ) + 
+				'?url=' + ( loaderInfo.parameters.url || 'WeQP0Ibkq2k' ) + 
+				'&autoplay=' + ( loaderInfo.parameters.autoplay || 'true' ), 
+				null, handleComplete );
 		}
 		
 		private function handleComplete(e:Event):void
 		{
+			var player:Object	= e.target.content;
+			
 			removeChild( loader );
 			
-			addChild( e.target.content );
+			addChild( player as Sprite );
+			
+			stage.addEventListener( Event.RESIZE, player.handleResize, false, 0, true );
 		}
 	}
 }
